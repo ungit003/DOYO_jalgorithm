@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Tetromino {
+public class Boj_14500 {
     static int[][] grid;
     static int n, m, maxSum = 0;
 

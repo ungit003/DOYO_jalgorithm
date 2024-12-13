@@ -1,81 +1,58 @@
 package boj;
-
-import java.util.*;
+// 달팽이 3
 import java.io.*;
-public class BOJ_1959 {
-    static int dir;
-    static long x,y,r,c,count;
-    static int[][] rule= {{1,-1},{-1,-1},{-1,1}, {1,1}};
-    static int[] dr = {0,1,0,-1};
-    static int[] dc = {1,0,-1,0};
-    public static void main(String[] args) throws IOException{
+import java.util.*;
+
+public class BOJ_1959_2 {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        r = sc.nextInt();
-        c = sc.nextInt();
-        long total = r*c;
-        long rightX = 0;
-        long rightY = c-1;
-        long downX = r-1;
-        long downY = c-1;
-        long leftX = r-1;
-        long leftY = 0;
-        long upX = 1;
-        long upY = 0;
+        long r = sc.nextLong();
+        long c = sc.nextLong();
+        // 꺽이는 횟수
+        long count = 0;
+        // 도착지점 행 좌표
+        long finalRow = 0;
+        // 도착지점 열 좌표
+        long finalCol = 0;
 
-        for (int i = 0; i < total; i++) {
-            long nr = x + dr[dir];
-            long nc = y + dc[dir];
-            if(nr >=0 && nc >= 0 && nr < r && nc < c){
-                if(nr == rightX &&nc == rightY){
-                    x = nr;
-                    y = nc;
-                    count++;
-                    dir = 1;
-                    rightX += rule[0][0];
-                    rightY += rule[0][1];
+        // 규칙
+        if (r > c) {
 
-                } else if (nr == downX & nc == downY) {
-                    x = nr;
-                    y = nc;
-                    count++;
-                    dir = 2;
-                    downX += rule[1][0];
-                    downY += rule[1][1];
+            count = (c - 1) * 2 + 1;
 
-                } else if (nr == leftX & nc == leftY) {
-                    x = nr;
-                    y = nc;
-                    count++;
-                    dir = 3;
-                    leftX += rule[2][0];
-                    leftY += rule[2][1];
-
-
-                }else if(nr == upX & nc == upY){
-                    x = nr;
-                    y = nc;
-                    count++;
-                    dir = 0;
-                    upX += rule[3][0];
-                    upY += rule[3][1];
-
-
-                }
+            if (c % 2 == 0) {
+                finalRow = (c / 2 + 1);
+                finalCol = (c / 2);
+            } else {
+                finalRow = (c / 2 + 1) + (r - c);
+                finalCol = (c / 2 + 1);
             }
-
-
-            x = nr;
-            y = nc;
-
-
         }
 
+        else if (r == c) {
+            count = (r - 1) * 2;
+            if (r % 2 == 0) {
+                finalRow = (r / 2 + 1);
+                finalCol = (r / 2);
+            } else {
+                finalRow = (r / 2 + 1);
+                finalCol = (r / 2 + 1);
+            }
+        }
+
+        else {
+            count = (r - 1) * 2;
+            if (r % 2 == 0) {
+                finalRow = (r / 2 + 1);
+                finalCol = (r / 2);
+            } else {
+                finalRow = (r / 2 + 1);
+                finalCol = (r / 2 + 1) + (c - r);
+            }
+        }
+
+
         System.out.println(count);
-        System.out.println(x);
-        System.out.println(y);
-
-
+        System.out.println(finalRow + " " + finalCol);
     }
-
 }
-

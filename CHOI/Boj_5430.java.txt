@@ -1,0 +1,56 @@
+import java.util.*;
+import java.io.*;
+
+public class Boj_5430 {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine()); // 테스트 케이스 개수
+
+        while (T-- > 0) {
+            String p = br.readLine(); // 수행할 함수
+            int n = Integer.parseInt(br.readLine()); // 배열 크기
+            String input = br.readLine(); // 배열 입력
+            Deque<Integer> deque = new ArrayDeque<>();
+            
+            // 배열 파싱
+            if (n > 0) {
+                String[] elements = input.substring(1, input.length() - 1).split(",");
+                for (String elem : elements) {
+                    deque.add(Integer.parseInt(elem));
+                }
+            }
+
+            boolean isReversed = false;
+            boolean isError = false;
+
+            // p를 배열로 변경(RDD -> {'R', 'D', 'D'}
+            for (char cmd : p.toCharArray()) {
+                if (cmd == 'R') {
+                    isReversed = !isReversed; // 뒤집기 상태 변경
+                } else if (cmd == 'D') {
+                    if (deque.isEmpty()) {
+                        System.out.println("error");
+                        isError = true;
+                        break;
+                    }
+                    if (isReversed) {
+                        deque.removeLast(); // 마지막 제거(뒤집혀져있으니)
+                    } else {
+                        deque.removeFirst(); // 첫 번째 제거
+                    }
+                }
+            }
+
+            // 출력쓰
+            if (!isError) {
+                StringBuilder result = new StringBuilder("[");
+                while (!deque.isEmpty()) {
+                    result.append(isReversed ? deque.removeLast() : deque.removeFirst());
+                    if (!deque.isEmpty()) result.append(",");
+                }
+                result.append("]");
+                System.out.println(result.toString());
+            }
+        }
+    }
+}

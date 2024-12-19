@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Boj_11399 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // 사람 수 N
+        int N = sc.nextInt();
+        
+        // ATM 사용 시간 배열
+        int[] arr = new int[N];
+        
+        // 배열 값 입력받기
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+        }
+        
+        // 배열 정렬
+        Arrays.sort(arr);
+        
+        // 총 대기 시간 계산
+        int ans = 0;
+        for (int i = 0; i < N; i++) {
+            ans += (N - i) * arr[i];
+        }
+        
+        // 결과 출력
+        System.out.println(ans);
+    }
+}

@@ -1,0 +1,88 @@
+import java.util.*;
+
+public class BOJ_9019 {
+    static class Node {
+        int value;
+        String command;
+
+        Node(int value, String command) {
+            this.value = value;
+            this.command = command;
+        }
+    }
+
+    // 명령어 적용 함수들
+    static int D(int n) {
+        return (2 * n) % 10000;
+    }
+
+    static int S(int n) {
+        return n == 0 ? 9999 : n - 1;
+    }
+
+    static int L(int n) {
+        return (n % 1000) * 10 + (n / 1000);
+    }
+
+    static int R(int n) {
+        return (n % 10) * 1000 + (n / 10);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+
+        while (T-- > 0) {
+            int A = sc.nextInt();
+            int B = sc.nextInt();
+            
+            // BFS를 위한 큐와 방문 배열
+            Queue<Node> queue = new LinkedList<>();
+            boolean[] visited = new boolean[10000];
+            queue.add(new Node(A, ""));
+            visited[A] = true;
+
+            while (!queue.isEmpty()) {
+                Node current = queue.poll();
+                int value = current.value;
+                String command = current.command;
+
+                // 목표값에 도달하면 명령어 출력
+                if (value == B) {
+                    System.out.println(command);
+                    break;
+                }
+
+                // D 명령어 적용
+                int nextValue = D(value);
+                if (!visited[nextValue]) {
+                    visited[nextValue] = true;
+                    queue.add(new Node(nextValue, command + "D"));
+                }
+
+                // S 명령어 적용
+                nextValue = S(value);
+                if (!visited[nextValue]) {
+                    visited[nextValue] = true;
+                    queue.add(new Node(nextValue, command + "S"));
+                }
+
+                // L 명령어 적용
+                nextValue = L(value);
+                if (!visited[nextValue]) {
+                    visited[nextValue] = true;
+                    queue.add(new Node(nextValue, command + "L"));
+                }
+
+                // R 명령어 적용
+                nextValue = R(value);
+                if (!visited[nextValue]) {
+                    visited[nextValue] = true;
+                    queue.add(new Node(nextValue, command + "R"));
+                }
+            }
+        }
+
+        sc.close();
+    }
+}
